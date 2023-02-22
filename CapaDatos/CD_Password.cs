@@ -18,7 +18,14 @@ namespace CapaDatos
             {
                 try
                 {
-                    password.position = db.Password.Max(c=>c.position + 1);
+                    if (db.Password.Max(c => c.position) == null)
+                    {
+                        password.position = 0;
+                    }
+                    else
+                    {
+                        password.position = db.Password.Max(c => c.position + 1);
+                    }
                     db.Password.Add(password);
                     db.SaveChanges();
                     return true;
