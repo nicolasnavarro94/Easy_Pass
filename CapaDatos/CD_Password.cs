@@ -47,7 +47,9 @@ namespace CapaDatos
                 try
                 {
                     var pass = db.Password.Where(c => c.id == password.id).FirstOrDefault();
-                    pass = password;
+                    pass.descripcion = password.descripcion;
+                    pass.pass = password.pass;
+                    db.Password.AddOrUpdate(pass);
                     db.SaveChanges();
                     return true;
                 }
