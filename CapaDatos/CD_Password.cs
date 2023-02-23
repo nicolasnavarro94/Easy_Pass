@@ -75,7 +75,7 @@ namespace CapaDatos
             message = null;
             using (var db = new easyPassEntities())
             {
-                return db.Password.Where(c => c.userID == id).FirstOrDefault();
+                return db.Password.Where(c => c.id == id).FirstOrDefault();
             }
         }
 
