@@ -114,7 +114,8 @@ namespace CapaDatos
                     var pass = db.Password.Where(c => c.id == selectedPass.id).FirstOrDefault();
                     pass.position = pass2.position;
                     db.SaveChanges();
-                    var passDecending = db.Password.Where(c => c.position > pass2.position).ToList();
+                    var passDecending = db.Password.Where(c=>c.userID == selectedPass.userID).Where
+                        (c => c.position > pass2.position).ToList();
 
                     foreach (var item in passDecending)
                     {
