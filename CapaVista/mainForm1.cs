@@ -54,7 +54,7 @@ namespace CapaVista
                 if (e.ColumnIndex == 0)
                 {
                     string pass = dgPass.Rows[e.RowIndex].Cells[5].Value.ToString();
-                    Clipboard.SetText(DesEncriptar(pass));
+                    Clipboard.SetText(Encrypt.DesEncriptar(pass));
                     alertForm alert = new alertForm("Contraseña copiada al portapapeles!","success");
                     alert.ShowDialog();
                 }
@@ -113,14 +113,6 @@ namespace CapaVista
             }
         }
 
-        public string DesEncriptar(string _cadenaAdesencriptar)
-        {
-            string result = string.Empty;
-            byte[] decryted = Convert.FromBase64String(_cadenaAdesencriptar);
-            result = System.Text.Encoding.Unicode.GetString(decryted);
-            return result;
-        }
-
         public bool yesNo(string message,string title)
         {
             bool resutl = false;
@@ -137,14 +129,15 @@ namespace CapaVista
 
         private void txtSearch_TextChanged(object sender, EventArgs e)
         {
-            string keyWord = txtSearch.Text.ToLower();
-            if (!string.IsNullOrEmpty(keyWord.Trim()))
+            string keyWord = txtSearch.Text.Replace(" ","").ToLower().Trim();
+            if (!string.IsNullOrEmpty(keyWord))
             {
-                dgPass.DataSource = passList.Where(C => C.descripcion.ToLower().Contains(txtSearch.Text)).ToList();
+                var search = passList.Where(C => C.descripcion.Replace(" ", "").ToLower().Contains(keyWord)).ToList();
+                fillDataGrid(search);
             }
             else
             {
-                dgPass.DataSource = passList;
+                fillDataGrid(passList);
             }
         }
 
